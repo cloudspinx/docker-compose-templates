@@ -1,0 +1,19 @@
+services:
+  webserver:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ${WEBROOT_PATH}:/var/www/certbot/
+      - ${LETSENCRYPT_PATH}:/etc/letsencrypt
+      - ${NGINX_CONF_PATH}:/etc/nginx/nginx.conf
+  certbot:
+    image: certbot/certbot:latest
+    entrypoint: ""
+    command: sh -c "trap exit TERM; while :; do certbot certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}; sleep 12h & wait $${!}; done;"
+
+    volumes:
+      - ./www/:/var/www/certbot/
+      - ./letsencrypt:/etc/letsencrypt

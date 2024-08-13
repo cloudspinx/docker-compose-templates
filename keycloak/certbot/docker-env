@@ -1,0 +1,5 @@
+EMAIL=youremail@domain.com
+DOMAIN=yourdomain.com
+WEBROOT_PATH=./www/
+LETSENCRYPT_PATH=./letsencrypt
+NGINX_CONF_PATH=./nginx.conf
